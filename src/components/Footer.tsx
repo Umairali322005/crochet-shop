@@ -38,6 +38,7 @@ export function Footer() {
               <li>📧 crochet.c43@gmail.com</li>
               <li>📱 +92 310 5175894</li>
               <li>📍 Pakistan, KPK, Swabi</li>
+              <li>💬 WhatsApp: +92 310 5175894</li>
             </ul>
           </div>
         </div>

@@ -7,7 +7,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <div className="flex items-center gap-2 mb-3">
-              <span className="text-2xl">🧶</span>
+              <span className="text-2xl">Yarn</span>
               <span className="font-bold text-lg text-primary-dark">Crochet Haven</span>
             </div>
             <p className="text-sm text-gray-600">
@@ -35,15 +35,15 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Contact</h4>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>📧 crochet.c43@gmail.com</li>
-              <li>📱 +92 310 5175894</li>
-              <li>📍 Pakistan, KPK, Swabi</li>
-              <li>💬 WhatsApp: +92 310 5175894</li>
+              <li>Email: crochet.c43@gmail.com</li>
+              <li>Phone: +92 310 5175894</li>
+              <li>WhatsApp: +92 310 5175894</li>
+              <li>Location: Pakistan, KPK, Swabi</li>
             </ul>
           </div>
         </div>
         <div className="mt-8 pt-6 border-t border-border text-center text-sm text-gray-500">
-          © 2026 Crochet Haven. Made with 💕 and yarn.
+          2026 Crochet Haven. Made with love and yarn.
         </div>
       </div>
     </footer>

@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useCart } from "@/store/cart";
 import { formatPrice } from "@/lib/utils";
 import { toast } from "@/components/Toaster";
 import { useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 
 type PaymentMethod = "cod" | "easypaisa";
 
@@ -16,6 +17,28 @@ export default function CheckoutPage() {
   const total = useCart((s) => s.total());
   const clear = useCart((s) => s.clear);
   const router = useRouter();
+  const [authChecked, setAuthChecked] = useState(false);
+
+  useEffect(() => {
+    (async () => {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        toast("Please log in to place an order", "error");
+        router.push("/auth/login?redirect=/checkout");
+        return;
+      }
+      setAuthChecked(true);
+    })();
+  }, [router]);
+
+  if (!authChecked) {
+    return (
+      <div className="max-w-7xl mx-auto px-4 py-20 text-center">
+        <p className="text-gray-500">Checking authentication...</p>
+      </div>
+    );
+  }
 
   const [method, setMethod] = useState<PaymentMethod>("cod");
   const [loading, setLoading] = useState(false);

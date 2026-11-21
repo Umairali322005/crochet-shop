@@ -1,16 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "@/components/Toaster";
 
-export default function LoginPage() {
+function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/account";
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -27,7 +29,7 @@ export default function LoginPage() {
       toast(error.message, "error");
     } else {
       toast("Welcome back!", "success");
-      router.push("/account");
+      router.push(redirectTo);
       router.refresh();
     }
     setLoading(false);
@@ -60,5 +62,13 @@ export default function LoginPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="max-w-md mx-auto px-4 py-16 text-center"><p>Loading...</p></div>}>
+      <LoginForm />
+    </Suspense>
   );
 }

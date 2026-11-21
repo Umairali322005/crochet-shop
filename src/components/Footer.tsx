@@ -35,9 +35,9 @@ export function Footer() {
           <div>
             <h4 className="font-semibold mb-3">Contact</h4>
             <ul className="space-y-2 text-sm text-gray-600">
-              <li>📧 hello@crochethaven.com</li>
-              <li>📱 +91 98765 43210</li>
-              <li>📍 India</li>
+              <li>📧 crochet.c43@gmail.com</li>
+              <li>📱 +92 310 5175894</li>
+              <li>📍 Pakistan, KPK, Swabi</li>
             </ul>
           </div>
         </div>

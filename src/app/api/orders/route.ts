@@ -53,6 +53,9 @@ export async function POST(request: Request) {
       try {
         const supabase = await createClient();
         const { data: { user } } = await supabase.auth.getUser();
+        if (!user) {
+          return NextResponse.json({ error: "Please log in to place an order" }, { status: 401 });
+        }
 
         const admin = await createAdminClient();
 

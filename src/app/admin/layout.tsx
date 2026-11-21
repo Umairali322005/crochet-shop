@@ -7,12 +7,14 @@ const hasSupabase = () =>
   !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
-  if (hasSupabase()) {
-    const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
-    if (!user || !isAdminEmail(user.email)) {
-      redirect("/auth/login");
-    }
+  if (!hasSupabase()) {
+    // In production without Supabase configured, block admin access
+    redirect("/auth/login");
+  }
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user || !isAdminEmail(user.email)) {
+    redirect("/auth/login");
   }
 
   const links = [

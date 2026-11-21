@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
 import { rateLimit, getClientIP } from "@/lib/rate-limit";
 
+const hasSupabase = () =>
+  !!process.env.NEXT_PUBLIC_SUPABASE_URL && !!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
 const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 const MAX_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -13,8 +16,8 @@ export async function POST(request: Request) {
   }
 
   try {
-    if (!process.env.NEXT_PUBLIC_SUPABASE_URL) {
-      return NextResponse.json({ error: "Supabase not configured" }, { status: 500 });
+    if (!hasSupabase()) {
+      return NextResponse.json({ error: "Supabase not configured" }, { status: 403 });
     }
 
     const supabase = await createClient();

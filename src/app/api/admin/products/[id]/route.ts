@@ -8,8 +8,7 @@ const hasSupabase = () =>
 export async function GET(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   if (!hasSupabase()) {
-    const p = mockProducts.find((x) => x.id === id);
-    return NextResponse.json(p || {});
+    return NextResponse.json({ error: "Supabase not configured" }, { status: 403 });
   }
   const admin = await createAdminClient();
   const { data } = await admin.from("products").select("*").eq("id", id).single();
@@ -28,7 +27,7 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
       return NextResponse.json({ error: "Invalid price" }, { status: 400 });
     }
     if (!hasSupabase()) {
-      return NextResponse.json({ id, ...body });
+      return NextResponse.json({ error: "Supabase not configured" }, { status: 403 });
     }
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
@@ -47,15 +46,16 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   try {
-    if (hasSupabase()) {
-      const supabase = await createClient();
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user || user.email?.toLowerCase() !== process.env.NEXT_PUBLIC_ADMIN_EMAIL?.toLowerCase()) {
-        return NextResponse.json({ error: "Forbidden" }, { status: 403 });
-      }
-      const admin = await createAdminClient();
-      await admin.from("products").delete().eq("id", id);
+    if (!hasSupabase()) {
+      return NextResponse.json({ error: "Supabase not configured" }, { status: 403 });
     }
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user || user.email?.toLowerCase() !== process.env.NEXT_PUBLIC_ADMIN_EMAIL?.toLowerCase()) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
+    }
+    const admin = await createAdminClient();
+    await admin.from("products").delete().eq("id", id);
     return NextResponse.json({ success: true });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

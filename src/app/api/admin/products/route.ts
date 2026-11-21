@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     }
     const data = parsed.data;
     if (!hasSupabase()) {
-      return NextResponse.json({ id: "mock-" + Date.now(), ...data });
+      return NextResponse.json({ error: "Supabase not configured" }, { status: 403 });
     }
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();

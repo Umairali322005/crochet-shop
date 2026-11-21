@@ -128,11 +128,8 @@ export async function POST(request: Request) {
       }
     }
 
-    // Fallback: no DB, return mock order id
-    return NextResponse.json({
-      order_id: "mock-" + orderNumber,
-      order_number: orderNumber,
-    });
+    // Supabase not configured — cannot place orders
+    return NextResponse.json({ error: "Service not configured" }, { status: 503 });
   } catch (err: any) {
     console.error(err);
     return NextResponse.json({ error: err.message || "Failed" }, { status: 500 });

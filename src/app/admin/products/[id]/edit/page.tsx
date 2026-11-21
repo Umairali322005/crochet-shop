@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
@@ -84,11 +84,11 @@ export default function EditProductPage() {
         }
         throw new Error(data.error || "Failed to update product");
       }
-      setStatus({ type: "success", msg: `✅ Product "${form.name}" updated successfully!` });
+      setStatus({ type: "success", msg: `âœ… Product "${form.name}" updated successfully!` });
       toast("Product updated successfully!", "success");
       setTimeout(() => router.push("/admin/products"), 1500);
     } catch (err: any) {
-      setStatus({ type: "error", msg: `❌ ${err.message || "Something went wrong"}` });
+      setStatus({ type: "error", msg: `âŒ ${err.message || "Something went wrong"}` });
       toast(err.message || "Something went wrong", "error");
     } finally {
       setSaving(false);
@@ -111,11 +111,11 @@ export default function EditProductPage() {
         </div>
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="text-sm font-medium text-gray-600 mb-1 block">Price (₹) *</label>
+            <label className="text-sm font-medium text-gray-600 mb-1 block">Price (Rs) *</label>
             <input type="number" required value={form.price} onChange={(e) => update("price", e.target.value)} className="w-full px-4 py-2 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/40" />
           </div>
           <div>
-            <label className="text-sm font-medium text-gray-600 mb-1 block">Compare Price (₹)</label>
+            <label className="text-sm font-medium text-gray-600 mb-1 block">Compare Price (Rs)</label>
             <input type="number" value={form.compare_at_price} onChange={(e) => update("compare_at_price", e.target.value)} className="w-full px-4 py-2 rounded-lg border border-border focus:outline-none focus:ring-2 focus:ring-primary/40" />
           </div>
         </div>

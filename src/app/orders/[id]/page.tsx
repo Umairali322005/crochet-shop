@@ -187,7 +187,7 @@ export default async function OrderDetailPage({
           <p className="text-sm text-gray-600">
             {order.shipping_name}<br />
             {order.shipping_address}<br />
-            {order.shipping_phone && <>Phone: {order.shipping_phone}</>}
+            {order.shipping_phone && <>Phone: <a href={`tel:${order.shipping_phone}`} className="text-primary-dark hover:underline">{order.shipping_phone}</a></>}
           </p>
         </div>
       </div>

@@ -48,7 +48,12 @@ export default async function AdminOrders() {
               {orders.map((o) => (
                 <tr key={o.id} className="border-t border-border">
                   <td className="p-3 font-medium">#{o.order_number}</td>
-                  <td className="p-3">{o.shipping_name}</td>
+                  <td className="p-3">
+                    <div className="font-medium">{o.shipping_name}</div>
+                    <a href={`tel:${o.shipping_phone}`} className="text-xs text-primary-dark hover:underline">
+                      📞 {o.shipping_phone}
+                    </a>
+                  </td>
                   <td className="p-3 font-semibold">{formatPrice(o.total)}</td>
                   <td className="p-3">
                     {o.payment_method === "cod" ? "COD" : "Easypaisa"} ({o.payment_status})
